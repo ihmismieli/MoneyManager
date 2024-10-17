@@ -22,9 +22,19 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-   public void saveAll(List<Transaction> transactions) {
-      transactionRepository.saveAll(transactions);
- }
+    public void saveAll(List<Transaction> transactions) {
+        for (Transaction transaction : transactions) {
+            boolean exists = transactionRepository.existsByTransactionDateAndAmountAndRecipientAndCategory(
+                    transaction.getTransactionDate(),
+                    transaction.getAmount(),
+                    transaction.getRecipient(),
+                    transaction.getCategory());
+            if (!exists) {
+                transactionRepository.save(transaction);
+            }
+
+        }
+    }
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
@@ -47,7 +57,8 @@ public class TransactionService {
         }
 
         // Formats total sums
-        // Uses BigDecimal instead of Decimal format because the value has to be a double not a string
+        // Uses BigDecimal instead of Decimal format because the value has to be a
+        // double not a string
         Map<String, Double> formattedTotals = new HashMap<>();
         for (Map.Entry<String, Double> entry : totalByCategory.entrySet()) {
             BigDecimal roundedValue = BigDecimal.valueOf(entry.getValue()).setScale(2, RoundingMode.HALF_UP);
@@ -56,7 +67,7 @@ public class TransactionService {
         return formattedTotals;
     }
 
-    // calculate total spendings without income and personal transfer
+    // calculates total spendings without income and personal transfer
     public double calculateTotalSpendings() {
         List<Transaction> transactions = transactionRepository.findAll();
 
@@ -71,23 +82,22 @@ public class TransactionService {
             }
         }
         return total.doubleValue();
-        
+
     }
 
+    //calculates totalIncome
     public double calculateTotalIncome() {
         List<Transaction> transactions = transactionRepository.findAll();
         BigDecimal totalIncome = BigDecimal.ZERO;
 
         for (Transaction transaction : transactions) {
             BigDecimal incomeAmount = BigDecimal.valueOf(transaction.getAmount());
-            if (transaction.getAmount() > 0 && 
-                transaction.getCategory().getName().equalsIgnoreCase("Income")) {
-                    totalIncome = totalIncome.add(incomeAmount);
+            if (transaction.getAmount() > 0 &&
+                    transaction.getCategory().getName().equalsIgnoreCase("Income")) {
+                totalIncome = totalIncome.add(incomeAmount);
             }
         }
         return totalIncome.doubleValue();
     }
-
-
 
 }

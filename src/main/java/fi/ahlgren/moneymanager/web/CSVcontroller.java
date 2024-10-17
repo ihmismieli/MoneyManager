@@ -43,7 +43,7 @@ public class CSVcontroller {
             return "redirect:/moneymanager";
         }
 
-        transactionService.deleteAllTransactions();
+        // transactionService.deleteAllTransactions();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
 
