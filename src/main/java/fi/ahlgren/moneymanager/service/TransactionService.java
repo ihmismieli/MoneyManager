@@ -21,8 +21,7 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-
-    // Checks if transaction already exists
+    
    public void saveAll(List<Transaction> transactions) {
       transactionRepository.saveAll(transactions);
  }
@@ -48,8 +47,7 @@ public class TransactionService {
         }
 
         // Formats total sums
-        // Uses BigDecimal instead of Decimal format because the value has to be a
-        // double not a String
+        // Uses BigDecimal instead of Decimal format because the value has to be a double not a string
         Map<String, Double> formattedTotals = new HashMap<>();
         for (Map.Entry<String, Double> entry : totalByCategory.entrySet()) {
             BigDecimal roundedValue = BigDecimal.valueOf(entry.getValue()).setScale(2, RoundingMode.HALF_UP);
@@ -61,17 +59,19 @@ public class TransactionService {
     // calculate total spendings without income and personal transfer
     public double calculateTotalSpendings() {
         List<Transaction> transactions = transactionRepository.findAll();
-        double total = 0.00;
+
+        BigDecimal total = BigDecimal.ZERO;
 
         for (Transaction transaction : transactions) {
+            BigDecimal amount = BigDecimal.valueOf(transaction.getAmount());
             if (transaction.getAmount() < 0 &&
                     !(transaction.getCategory().getName().equalsIgnoreCase("Income") ||
                             transaction.getCategory().getName().equalsIgnoreCase("Personal transfer"))) {
-                total += transaction.getAmount();
+                total = total.add(amount);
             }
         }
-
-        return total;
+        return total.doubleValue();
+        
     }
 
     public double calculateTotalIncome() {
