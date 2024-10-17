@@ -7,32 +7,7 @@
     <title>Money Manager</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-    <style>
-        body{ 
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
-
-        h1{
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .nav {
-            
-            justify-content: center;
-        }
-        .nav-link {
-            margin: 0 15px;
-        }
-        .btn-danger{
-            float: right;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/moneymanager.css}">
 </head>
 
 <body>
@@ -44,50 +19,57 @@
         </div>
         <div>
             <h1>Money Manager</h1>
-            <nav class="nav">
-                <a class="nav-link active" href="/moneymanager">Home</a>
-                <a class="nav-link" href="/spendings">Spendings</a>
+            <nav class="nav-bar">
+                <ul class="nav-ul">
+                    <li class="nav-li"><a class="active" href="/moneymanager">Home</a></li>
+                    <li class="nav-li"><a href="/spendings">Spendings</a></li>
+                    <div>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Sign out" class="btn btn-sm btn-danger">
+                        </form>
+                    </div>
+                </ul>
             </nav>
         </div>
-            <div class="mt-4">
-                <h2>Upload CSV file</h2>
-                <p>CSV file should contain information in this order:
-                <ul>
-                    <li>1. Transaction date</li>
-                    <li>2. Payment date</li>
-                    <li>3. Amount</li>
-                    <li>4. Transaction type</li>
-                    <li>5. Payer</li>
-                    <li>6. Recipient</li>
-                    <li>7. Recipient IBAN</li>
-                    <li>8. Reference number</li>
-                    <li>9. Message</li>
-                    <li>10. Archive ID</li>
-                </ul>
-                </p>
-                <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
+        <div class="mt-4">
+            <h2>Upload CSV file</h2>
+            <p>CSV file should contain information in this order:
+            <ul>
+                <li>1. Transaction date</li>
+                <li>2. Payment date</li>
+                <li>3. Amount</li>
+                <li>4. Transaction type</li>
+                <li>5. Payer</li>
+                <li>6. Recipient</li>
+                <li>7. Recipient IBAN</li>
+                <li>8. Reference number</li>
+                <li>9. Message</li>
+                <li>10. Archive ID</li>
+            </ul>
+            </p>
+            <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
 
-                <!-- enctype compulsory when sending data -->
-                <form th:action="@{/moneymanager}" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <!-- ensures that csrf is included when sending the form -->
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="file" name="file" accept=".csv">
-                        <button type="submit">Upload CSV</button>
-                    </div>
-                </form>
-            </div>
-            <div>
-                <div th:if="${timeline}" th:text="${timeline}"></div>
-                <ul>
-                    <li th:each="entry : ${totals}">
-                        <span th:text="${entry.key}"></span>: 
-                        <span th:text="${entry.value}"></span>
-                    </li>
-                </ul>
-                <div th:if="${totalSpendings}">Total spendings: <span th:text="${totalSpendings}"></span></div>
-                <div th:if="${totalIncome}">Total income: <span th:text="${totalIncome}"></span></div>
-            </div>
+            <!-- enctype compulsory when sending data -->
+            <form th:action="@{/moneymanager}" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <!-- ensures that csrf is included when sending the form -->
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="file" name="file" accept=".csv">
+                    <button type="submit">Upload CSV</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <div th:if="${timeline}" th:text="${timeline}"></div>
+            <ul>
+                <li th:each="entry : ${totals}">
+                    <span th:text="${entry.key}"></span>:
+                    <span th:text="${entry.value}"></span>
+                </li>
+            </ul>
+            <div th:if="${totalSpendings}">Total spendings: <span th:text="${totalSpendings}"></span></div>
+            <div th:if="${totalIncome}">Total income: <span th:text="${totalIncome}"></span></div>
+        </div>
     </div>
 </body>
 
