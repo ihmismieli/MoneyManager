@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +21,14 @@ public class Category {
 
     private String name;
 
-    @JsonIgnore //prevents cyclization when the category object is converted to JSON
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "category")
+    //allows storing collections without creating separate entities
+    @ElementCollection
+    private List<String> keywords; 
 
+    @JsonIgnore // prevents looping when category object is changed to JSON
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Transaction> transactions;
+
 
     public Long getCategoryid() {
         return categoryid;
@@ -41,6 +46,14 @@ public class Category {
         this.name = name;
     }
 
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
     public List<Transaction> getTransactions() {
         return transactions;
     }
@@ -48,5 +61,4 @@ public class Category {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
-    
 }

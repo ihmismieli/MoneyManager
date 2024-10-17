@@ -21,7 +21,7 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-    
+
    public void saveAll(List<Transaction> transactions) {
       transactionRepository.saveAll(transactions);
  }
@@ -76,15 +76,16 @@ public class TransactionService {
 
     public double calculateTotalIncome() {
         List<Transaction> transactions = transactionRepository.findAll();
-        double totalIncome = 0.00;
+        BigDecimal totalIncome = BigDecimal.ZERO;
 
         for (Transaction transaction : transactions) {
+            BigDecimal incomeAmount = BigDecimal.valueOf(transaction.getAmount());
             if (transaction.getAmount() > 0 && 
                 transaction.getCategory().getName().equalsIgnoreCase("Income")) {
-                    totalIncome += transaction.getAmount();
+                    totalIncome = totalIncome.add(incomeAmount);
             }
         }
-        return totalIncome;
+        return totalIncome.doubleValue();
     }
 
 

@@ -23,6 +23,12 @@ public class CategoryService {
     @Autowired
     private CategoryKeywords categoryKeywords;
 
+      public CategoryService(CategoryRepository categoryRepository) {
+     this.categoryRepository = categoryRepository;
+       this.categoryKeywords = new CategoryKeywords();
+        saveCategories();
+ }
+
     public void saveCategories() {
         for (Map.Entry<String, List<String>> entry : categoryKeywords.getCategoryMap().entrySet()) {
             String categoryName = entry.getKey();
@@ -40,7 +46,11 @@ public class CategoryService {
             return "Personal transfer";
         }
 
-        if (payer.equalsIgnoreCase("tyollisyysrahasto") || payer.equalsIgnoreCase("VIPPS MOBILEPAY AS, SUOMEN SIVULII")) {
+        if (payer.equalsIgnoreCase("Heidi Elina Ahlgren") || payer.equalsIgnoreCase("Ahlgren Heidi Elina") && recipient.equalsIgnoreCase("Heidi Elina Ahlgren")) {
+            return "Personal transfer";
+        }
+
+        if (payer.equalsIgnoreCase("tyollisyysrahasto") || payer.equalsIgnoreCase("VIPPS MOBILEPAY AS, SUOMEN SIVULII") || payer.equalsIgnoreCase("verohallinto") || payer.contains(("MobilePay"))) {
             return "Income";
         }
         // checks if payer is not heidi and recipient is heidi
