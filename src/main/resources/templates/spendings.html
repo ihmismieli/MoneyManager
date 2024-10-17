@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+</html>
+
+<head>
+    <title>Money Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <style>
+         body{ 
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        h1{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .nav {
+            
+            justify-content: center;
+        }
+
+        .nav-link {
+            margin: 0 15px;
+        }
+        .btn-danger{
+            float: right;
+        }
+    </style>
+
+<body>
+    <div class="container">
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign out" class="btn btn-sm btn-danger">
+            </form>
+        </div>
+        <div>
+            <h1>Money Manager</h1>
+            <nav class="nav">
+                <a class="nav-link" href="/moneymanager">Home</a>
+                <a class="nav-link active" href="/spendings">Spendings</a>
+            </nav>
+        </div>
+        <div class="mt-4">
+            <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
+            <div>
+                <div th:if="${timeline}" th:text="${timeline}"></div>
+                <ul>
+                    <li th:each="entry : ${totals}">
+                        <span th:text="${entry.key}"></span>: 
+                        <span th:text="${entry.value}"></span>
+                    </li>
+                </ul>
+                <div th:if="${totalSpendings}">Total spendings: <span th:text="${totalSpendings}"></span> euros</div>
+                <div th:if="${totalIncome}">Total income: <span th:text="${totalIncome}"></span> euros</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
