@@ -51,6 +51,10 @@ public class CategoryService {
             return "Personal transfer";
         }
 
+        if (payer.equalsIgnoreCase("HOK-ELANTO LIIKETOIMINTA OY") && recipient.equalsIgnoreCase("Ahlgren Heidi")) {
+            return "Income";
+        }
+
         if (payer.equalsIgnoreCase("tyollisyysrahasto") || payer.equalsIgnoreCase("VIPPS MOBILEPAY AS, SUOMEN SIVULII")
                 || payer.equalsIgnoreCase("verohallinto") || payer.contains(("MobilePay"))) {
             return "Income";

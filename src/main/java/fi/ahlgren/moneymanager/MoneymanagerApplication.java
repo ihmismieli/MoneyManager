@@ -32,10 +32,6 @@ public class MoneymanagerApplication {
 
 			createUserIfNotFound(appUserRepository, "admin", "$2a$10$ppC47QIlMYsg7LU8YdR2Wu3Xp8IA9x3pO.X4ePWW0TmVUU3XHza7.", "ADMIN");
 			
-			log.info("fetch all transactions");
-			for (Transaction transaction : transactionRepository.findAll()) {
-				log.info(transaction.toString());
-			}
 		};
 	}
 

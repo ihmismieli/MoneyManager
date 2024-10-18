@@ -12,15 +12,6 @@ h1 {
     margin-bottom: 30px;
 }
 
-.nav {
-
-    justify-content: center;
-}
-
-.nav-link {
-    margin: 0 15px;
-}
-
 .nav-ul {
     list-style-type: none;
     margin: 0;
@@ -29,10 +20,10 @@ h1 {
     background-color: #333;
 }
 
-.nav-ul div {
+/* .nav-ul div {
     margin-left: auto;
     
-  }
+  } */
 
 .nav-li {
     float: left;
@@ -45,14 +36,28 @@ h1 {
     padding: 14px 16px;
     text-decoration: none;
 }
-li a:hover:not(.active) {
-    background-color: #111;
-  }
+
+.nav-li a, .sign-out-btn {
+    display: block;
+    color: white; 
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: transparent;
+    border: none; 
+    cursor: pointer; 
+    float: right;
+}
 
 .active {
     background-color: #555555;
 }
 
-.btn-danger {
-    float: right;
-}
+.nav-li a:hover:not(.active), 
+ .sign-out-btn:hover{
+    background-color: #111;
+  }
+
+ .sign-out-form {
+    margin-left: auto;
+ }
