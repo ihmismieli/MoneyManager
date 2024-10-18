@@ -3,6 +3,8 @@ package fi.ahlgren.moneymanager.service;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ public class CategoryKeywords {
         categoryMap.put("Personal transfer", Arrays.asList("omatilisiirto", "NORDNET"));
 
         // income
-        categoryMap.put("Income", Arrays.asList("tyollisyysrahasto", "HOK", "Kela", "Kansanelakelaitos", "Verohallinto"));
+        categoryMap.put("Income", Arrays.asList("tyollisyysrahasto", "HOK-ELANTO", "Kela", "Kansanelakelaitos", "Verohallinto"));
 
         // Food
         categoryMap.put("Food", Arrays.asList("K-supermarket", "LIDL", "K-Market", "S-market",
@@ -86,7 +88,11 @@ public class CategoryKeywords {
 
     //Returns keywords that are joined to the category, if category is not found from categoryMap variable, it returns an empty list
     public List<String> getKeywordsByCategory(String category) {
-        return categoryMap.getOrDefault(category, Collections.emptyList());
+        if (categoryMap.containsKey(category)) {
+            return categoryMap.get(category);
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public Map<String, List<String>> getAllCategories() {

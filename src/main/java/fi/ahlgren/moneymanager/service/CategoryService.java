@@ -4,7 +4,6 @@ package fi.ahlgren.moneymanager.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +22,13 @@ public class CategoryService {
     @Autowired
     private CategoryKeywords categoryKeywords;
 
-      public CategoryService(CategoryRepository categoryRepository) {
-     this.categoryRepository = categoryRepository;
-       this.categoryKeywords = new CategoryKeywords();
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+        this.categoryKeywords = new CategoryKeywords();
         saveCategories();
- }
+    }
 
+    // saves categories to categoryRepository
     public void saveCategories() {
         for (Map.Entry<String, List<String>> entry : categoryKeywords.getCategoryMap().entrySet()) {
             String categoryName = entry.getKey();
@@ -46,11 +46,13 @@ public class CategoryService {
             return "Personal transfer";
         }
 
-        if (payer.equalsIgnoreCase("Heidi Elina Ahlgren") || payer.equalsIgnoreCase("Ahlgren Heidi Elina") && recipient.equalsIgnoreCase("Heidi Elina Ahlgren")) {
+        if (payer.equalsIgnoreCase("Heidi Elina Ahlgren")
+                || payer.equalsIgnoreCase("Ahlgren Heidi Elina") && recipient.equalsIgnoreCase("Heidi Elina Ahlgren")) {
             return "Personal transfer";
         }
 
-        if (payer.equalsIgnoreCase("tyollisyysrahasto") || payer.equalsIgnoreCase("VIPPS MOBILEPAY AS, SUOMEN SIVULII") || payer.equalsIgnoreCase("verohallinto") || payer.contains(("MobilePay"))) {
+        if (payer.equalsIgnoreCase("tyollisyysrahasto") || payer.equalsIgnoreCase("VIPPS MOBILEPAY AS, SUOMEN SIVULII")
+                || payer.equalsIgnoreCase("verohallinto") || payer.contains(("MobilePay"))) {
             return "Income";
         }
         // checks if payer is not heidi and recipient is heidi

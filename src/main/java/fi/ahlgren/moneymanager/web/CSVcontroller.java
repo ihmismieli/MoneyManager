@@ -1,8 +1,5 @@
 package fi.ahlgren.moneymanager.web;
 
-import java.util.Scanner;
-import java.util.stream.Collectors;
-
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.ui.Model; 
@@ -16,8 +13,8 @@ import fi.ahlgren.moneymanager.service.TransactionService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -47,11 +44,14 @@ public class CSVcontroller {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
 
-        // file.getInputStream() creates an inputStream object that is given to the
-        // scanner so that scanner can read the file
+        // file.getInputStream() creates an inputStream object that is given to the scanner so that scanner can read the file & UTF makes sure that special characters are scanned right
         try (Scanner scanner = new Scanner(file.getInputStream(), StandardCharsets.UTF_8)) {
             List<Transaction> transactions = new ArrayList<>();
             scanner.nextLine();
+
+            //
+            LocalDate minDate = LocalDate.MAX;
+            LocalDate maxDate = LocalDate.MIN;
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -62,12 +62,22 @@ public class CSVcontroller {
                 String amount = data[2].replace(",", ".");
                 transaction.setAmount(Double.parseDouble(amount));
                 transaction.setTransactionType(data[3]);
-                transaction.setPayer(normalizeString(data[4]));
+                transaction.setPayer(replaceDiacritics(data[4]));
                 transaction.setRecipient(data[5]);
                 transaction.setRecipientIBAN(data[6]);
                 transaction.setReferenceNumber(data[7]);
                 transaction.setMessage(data[8]);
                 transaction.setArchiveId(data[9]);
+
+                //checks if transaction is before current minDate and updates it if it is
+                if (transaction.getTransactionDate().isBefore(minDate)) {
+                    minDate = transaction.getTransactionDate();
+                }
+
+                //checks if transaction is after current maxDate
+                if (transaction.getTransactionDate().isAfter(maxDate)) {
+                    maxDate = transaction.getTransactionDate();
+                }
 
                 // defining the category by recipient, payer or transactionType
                 String recipient = data[5];
@@ -79,31 +89,21 @@ public class CSVcontroller {
             transactionService.saveAll(transactions);
             redirectAttributes.addFlashAttribute("message", "File data has been saved successfully!");
 
-            //Spendings total by a category
-            Map<String, Double> totalByCategory = transactionService.calculateTotalByCategory();
+            //Spendings total by a category between minDate and maxDate
+            Map<String, Double> totalByCategory = transactionService.calculateTotalByCategory(minDate, maxDate);
             redirectAttributes.addFlashAttribute("totals", totalByCategory);
 
-            //Spendings total without income and personal transfer
-            double totalSpendings = transactionService.calculateTotalSpendings();
+            //Spendings total without income and personal transfer between minDate and maxDate
+            double totalSpendings = transactionService.calculateTotalSpendings(minDate, maxDate);
             redirectAttributes.addFlashAttribute("totalSpendings", totalSpendings);
 
-            //Total income
-            double totalIncome = transactionService.calculateTotalIncome();
+            //Total income between minDate and maxDate
+            double totalIncome = transactionService.calculateTotalIncome(minDate, maxDate);
             redirectAttributes.addFlashAttribute("totalIncome", totalIncome);
 
             //Date timeline for spendings
-            if (!transactions.isEmpty()) {
-                List<LocalDate> paymentDates = transactions.stream()
-                                                            .map(Transaction::getPaymentDate)
-                                                            .collect(Collectors.toList());
-                LocalDate minDate = Collections.min(paymentDates);
-                LocalDate maxDate = Collections.max(paymentDates);
-
-                String formattedMinDate = minDate.format(formatter);
-                String formattedMaxDate = maxDate.format(formatter);
-                String timeline = "Spendings " + formattedMinDate + " - " + formattedMaxDate;
-                redirectAttributes.addFlashAttribute("timeline", timeline);
-            }
+            String timeline = transactionService.getTimelineforCSV(transactions);
+            redirectAttributes.addFlashAttribute("timeline", timeline);
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "Failed to read the file: " + e.getMessage());
@@ -112,7 +112,7 @@ public class CSVcontroller {
         return "redirect:/spendings";
     }
 
-    private String normalizeString(String input){
+    private String replaceDiacritics(String input){
         if (input == null) {
             return null;
         }
