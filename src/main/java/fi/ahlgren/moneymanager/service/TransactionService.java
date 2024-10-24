@@ -12,12 +12,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 //this class is in charge of saving data to the database.
 //makes it easier to maintain the code, because the database actions are seraparated from the controller
 
 import org.springframework.stereotype.Service;
 
+import fi.ahlgren.moneymanager.domain.AppUser;
 import fi.ahlgren.moneymanager.domain.Transaction;
 import fi.ahlgren.moneymanager.domain.TransactionRepository;
 

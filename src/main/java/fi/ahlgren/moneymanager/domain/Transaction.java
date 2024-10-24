@@ -32,8 +32,13 @@ public class Transaction {
     @JoinColumn(name = "categoryid")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private AppUser user;
+
     public Transaction() {
     }
+    
 
     public Long getId() {
         return id;
@@ -129,6 +134,16 @@ public class Transaction {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+
+    public AppUser getUser() {
+        return user;
+    }
+
+
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
     
