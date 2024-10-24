@@ -42,29 +42,21 @@
                 <li>10. Archive ID</li>
             </ul>
             </p>
+        </div>
+
             <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
-            
+            <div class="upload-container">
             <!-- enctype compulsory when sending data -->
             <form th:action="@{/moneymanager}" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
+                <div>
                     <!-- ensures that csrf is included when sending the form -->
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <input type="file" name="file" accept=".csv">
-                    <button type="submit">Upload CSV</button>
+                    <button type="submit" class="upload-btn">Upload CSV</button>
                 </div>
             </form>
         </div>
-        <!-- <div>
-            <div th:if="${timeline}" th:text="${timeline}"></div>
-            <ul>
-                <li th:each="entry : ${totals}">
-                    <span th:text="${entry.key}"></span>:
-                    <span th:text="${entry.value}"></span>
-                </li>
-            </ul>
-            <div th:if="${totalSpendings}">Total spendings: <span th:text="${totalSpendings}"></span></div>
-            <div th:if="${totalIncome}">Total income: <span th:text="${totalIncome}"></span></div>
-        </div> -->
+    </div>
     </div>
 </body>
 

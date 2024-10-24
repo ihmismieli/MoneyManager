@@ -12,12 +12,14 @@ h1 {
     margin-bottom: 30px;
 }
 
+.nav-bar {
+    background-color: black;
+}
 .nav-ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
 }
 
 
@@ -40,24 +42,60 @@ h1 {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    background-color: transparent;
+    /* background-color: transparent; */
     border: none;
     cursor: pointer;
     float: right;
 }
 
 
-.nav-li a:hover:not(.active),
-.sign-out-btn:hover {
-    background-color: #111;
+.nav-li a:hover,
+.sign-out-btn:hover,
+.upload-btn:hover {
+    /* background-color: #111; */
+    background-color: #4f4d4d;
 }
 
 
 .active {
-    background-color: #555555;
+    background-color: #666565;
+    color: black;
+}
+
+.sign-out-btn{
+    background-color: black;
 }
 
 .sign-out-form {
     margin-left: auto;
 }
 
+.mt-4 {
+ margin-bottom: 20px;
+}
+
+.alert {
+    display: inline-block;
+}
+
+.upload-container {
+    background-color: black;
+    color: white;
+    display: inline-block; 
+    padding: 10px;
+    max-width: 100%;
+}
+
+.upload-container div {
+    display: flex; 
+    align-items: center; 
+}
+
+.upload-btn {
+    display: block;
+    background-color: white;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+}

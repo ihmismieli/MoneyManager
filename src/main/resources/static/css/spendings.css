@@ -17,13 +17,8 @@ h1 {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #111;
 }
-
-/* .nav-ul div {
-    margin-left: auto;
-    
-  } */
 
 .nav-li {
     float: left;
@@ -37,27 +32,38 @@ h1 {
     text-decoration: none;
 }
 
-.nav-li a, .sign-out-btn {
+.nav-li a,
+.sign-out-btn {
     display: block;
-    color: white; 
+    color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    background-color: transparent;
-    border: none; 
-    cursor: pointer; 
+    border: none;
+    cursor: pointer;
     float: right;
 }
 
-.active {
-    background-color: #555555;
+
+.nav-li a:hover,
+.sign-out-btn:hover {
+    background-color: #4f4d4d;
 }
 
-.nav-li a:hover:not(.active), 
- .sign-out-btn:hover{
-    background-color: #111;
-  }
+
+.active {
+    background-color: #666565;
+    color: black;
+}
+
+.sign-out-btn{
+    background-color: black;
+}
 
  .sign-out-form {
     margin-left: auto;
  }
+
+ .alert {
+    display: inline-block;
+}

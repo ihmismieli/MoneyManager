@@ -7,23 +7,24 @@
     <title>Money Manager</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
-    <link rel="stylesheet" href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 
 <body>
     <div class="container">
-        <div>
-            <h1>Money Manager</h1>
+        <h1>Money Manager</h1>
+        <div class="information-text">By logging in, you can track your spending by uploading a CSV file to the Money Manager</div>
+        <div class="sign-in-container">
             <div th:if="${param.error}">
                 Invalid username or password.
             </div>
             <div th:if="${param.logout}">
                 You have been logged out.
             </div>
-            <form th:action="@{/login}" method="post">
+            <form th:action="@{/login}" method="post" class="sign-in-form">
                 <div><label>Username : <input type="text" name="username"/></label></div>
                 <div><label>Password : <input type="password" name="password"/></label></div>
-                <div><input type="submit" value="Sign in"/></div>
+                <div class="sign-in-button"><input type="submit" value="Sign in" class="submit-btn"/></div>
             </form>
         </div>
     </div>
