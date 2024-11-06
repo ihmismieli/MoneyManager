@@ -13,6 +13,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -50,4 +51,10 @@ h1 {
     background-color: #0f171ff1;
     color: rgb(253, 253, 253);
     border: 1px solid rgb(253, 253, 253);
+}
+
+.alert {
+    text-align: center;
+    margin: 0 auto; /*keskittää*/
+    max-width: fit-content;
 }
