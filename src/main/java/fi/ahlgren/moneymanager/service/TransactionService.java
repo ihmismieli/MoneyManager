@@ -58,7 +58,7 @@ public class TransactionService {
         return transactionRepository.findAllByTransactionDateBetween(startDate, endDate);
     }
 
-    public boolean doesTransactionExists(LocalDate date){
+    public boolean doesTransactionExists(LocalDate date) {
         return transactionRepository.existsByTransactionDate(date);
     }
 
@@ -126,13 +126,29 @@ public class TransactionService {
             String category = transaction.getCategory().getName();
             BigDecimal amount = BigDecimal.valueOf(transaction.getAmount());
 
-            BigDecimal updatedAmount = spendingsByCategory.getOrDefault(category, BigDecimal.ZERO).add(amount).setScale(2, RoundingMode.HALF_UP);
-            String formattedAmount = des.format(updatedAmount);
+            BigDecimal updatedAmount = spendingsByCategory.getOrDefault(category, BigDecimal.ZERO).add(amount)
+                    .setScale(2, RoundingMode.HALF_UP);
             spendingsByCategory.put(category, updatedAmount);
         }
         return spendingsByCategory;
 
     }
+
+    // Date range calculation for total income
+    // public BigDecimal calculateIncomeByDate (List<Transaction> transactions, LocalDate startDate, LocalDate endDate){
+    //     BigDecimal totalIncome = BigDecimal.ZERO;
+
+    //     for(Transaction transaction : transactions){
+    //         if(!transaction.getPaymentDate().isBefore(startDate) && !transaction.getPaymentDate().isAfter(endDate)) {
+    //             if (transaction.getAmount() > 0 &&
+    //             transaction.getCategory().getName().equalsIgnoreCase("Income")){
+    //                 BigDecimal amount = BigDecimal.valueOf(transaction.getAmount());
+    //                 totalIncome = totalIncome.add(amount).setScale(2, RoundingMode.HALF_UP);
+    //             }
+    //         }
+    //     }
+    //     return totalIncome;
+    // }
 
     // Returns timeline for the CSV and transactions by paymentdate
     public String getTimelineforCSV(List<Transaction> transactions) {

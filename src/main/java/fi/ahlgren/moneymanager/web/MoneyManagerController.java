@@ -52,7 +52,7 @@ public class MoneyManagerController {
             }
             spendingByCategory = transactionService.calculateTotalByDate(transactions);
             model.addAttribute("spendingByCategory", spendingByCategory);
-        } else {
+        } else if (startDate != null || endDate != null){
             model.addAttribute("error", "The selected date is invalid!");
             return "search";
         }
