@@ -27,6 +27,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @Controller
 public class CSVcontroller {
@@ -58,7 +60,7 @@ public class CSVcontroller {
             List<Transaction> transactions = new ArrayList<>();
             scanner.nextLine();
 
-            //
+            //date initialization
             LocalDate minDate = LocalDate.MAX;
             LocalDate maxDate = LocalDate.MIN;
 
@@ -141,4 +143,5 @@ public class CSVcontroller {
                 .replace("Å", "A");
 
     }
+    
 }

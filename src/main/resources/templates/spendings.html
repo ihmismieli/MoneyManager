@@ -17,6 +17,7 @@
                 <ul class="nav-ul">
                     <li class="nav-li"><a href="/moneymanager">Home</a></li>
                     <li class="nav-li"><a class="active" href="/spendings">Spendings</a></li>
+                    <li class="nav-li"><a href="/search">Search Spendings</a></li>
                     <li>
                         <form th:action="@{/logout}" method="post" class="sign-out-form">
                             <input type="submit" value="Sign out" class="sign-out-btn">
@@ -28,7 +29,7 @@
         <div class="mt-4">
             <div th:if="${message}" class="alert alert-info" th:text="${message}"></div>
             <div>
-                <div th:if="${timeline}" th:text="${timeline}"></div>
+                <div th:if="${timeline}" th:text="${timeline}" style="margin-bottom: 10px;"></div>
                 <ul>
                     <li th:each="entry : ${totals}">
                         <span th:text="${entry.key}"></span>:

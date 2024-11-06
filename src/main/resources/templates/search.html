@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+</html>
+
+<head>
+    <title>Money Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/search.css}">
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>Money Manager</h1>
+            <nav class="nav-bar">
+                <ul class="nav-ul">
+                    <li class="nav-li"><a href="/moneymanager">Home</a></li>
+                    <li class="nav-li"><a href="/spendings">Spendings</a></li>
+                    <li class="nav-li"><a class="active" href="/search">Search Spendings</a></li>
+                    <div>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Sign out" class="sign-out-btn">
+                        </form>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+        <div class="mt-4">
+            <h2>Search Spendings</h1>
+                <form action="/search" method="get">
+                    <div class="date-input">
+                        <label for="startDate">Start date:</label>
+                        <input type="date" id="startDate" name="startDate">
+                    </div>
+
+                    <div class="date-input">
+                        <label for="endDate">End date:</label>
+                        <input type="date" id="endDate" name="endDate">
+                    </div>
+
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+                <div th:if="${error}" class="alert alert-info" th:text="${error}"></div>
+        </div>
+        <div th:if="${spendingByCategory}">
+            <h2>By categories</h2>
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Total</th>
+                </tr>
+                <tr th:each="entry : ${spendingByCategory.entrySet()}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

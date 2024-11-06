@@ -12,6 +12,10 @@ h1 {
     margin-bottom: 30px;
 }
 
+h2 {
+    margin-bottom: 20px;
+}
+
 .nav-bar {
     background-color: black;
 }
@@ -70,32 +74,38 @@ h1 {
     margin-left: auto;
 }
 
-.mt-4 {
- margin-bottom: 20px;
-}
-
 .alert {
     display: inline-block;
 }
 
-.upload-container {
+.mt-4 {
+    margin-bottom: 20px;
+    text-align: center;
+   }
+   
+.date-input {
+    margin-bottom: 10px;
+}
+
+.date-input input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.search-button {
     background-color: black;
     color: white;
-    /* display: inline-block;  */
-    padding: 10px;
-    /* max-width: 100%; */
-}
-
-.upload-container div {
-    display: flex; 
-    align-items: center; 
-}
-
-.upload-btn {
-    display: block;
-    background-color: white;
-    color: black;
-    text-align: center;
-    text-decoration: none;
+    padding: 10px 20px;
+    margin-top:10px;
+    margin-bottom:20px;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #666565;
+    color: white;
 }
