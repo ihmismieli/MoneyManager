@@ -44,7 +44,7 @@
                 </form>
                 <div th:if="${error}" class="alert alert-info" th:text="${error}"></div>
         </div>
-        <div th:if="${spendingByCategory}">
+        <div th:if="${spendingByCategory}" class="results">
             <h2>By categories</h2>
             <table>
                 <tr>

@@ -46,9 +46,16 @@ public class MoneyManagerController {
 
         if (startDate != null && endDate != null) {
             transactions = transactionService.getTransactionsByDate(startDate, endDate);
+            if (transactions.isEmpty()) {
+                model.addAttribute("error", "The selected date is invalid!");
+                return "search";
+            }
             spendingByCategory = transactionService.calculateTotalByDate(transactions);
             model.addAttribute("spendingByCategory", spendingByCategory);
-        } 
+        } else {
+            model.addAttribute("error", "The selected date is invalid!");
+            return "search";
+        }
         return "search";
     }
 
