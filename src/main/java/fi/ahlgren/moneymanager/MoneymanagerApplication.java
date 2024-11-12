@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import fi.ahlgren.moneymanager.domain.AppUser;
 import fi.ahlgren.moneymanager.domain.AppUserRepository;
 import fi.ahlgren.moneymanager.domain.CategoryRepository;
-import fi.ahlgren.moneymanager.domain.Transaction;
 import fi.ahlgren.moneymanager.domain.TransactionRepository;
 
 

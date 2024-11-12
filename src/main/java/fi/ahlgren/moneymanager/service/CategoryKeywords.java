@@ -1,9 +1,7 @@
 package fi.ahlgren.moneymanager.service;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +14,7 @@ public class CategoryKeywords {
     private Map<String, List<String>> categoryMap;
 
     //class contructor, first an empty hashMap object and inizializeCategories fills categoryMap with categories and keywords
+    //ensures that categoryMap is ready to use
     public CategoryKeywords() {
         categoryMap = new HashMap<>();
         inizializeCategories();

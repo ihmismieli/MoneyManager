@@ -21,6 +21,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>{
         Category category
     );
 
-    boolean existsByTransactionDate(LocalDate transactionDate);
+    // boolean existsByTransactionDate(LocalDate transactionDate);
 
 }

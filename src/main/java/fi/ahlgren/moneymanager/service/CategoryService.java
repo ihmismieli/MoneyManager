@@ -1,6 +1,6 @@
 package fi.ahlgren.moneymanager.service;
 
-//This class categorizes transactions by recipient
+//This class categorizes transactions by recipient, payer or transaction type
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +13,7 @@ import fi.ahlgren.moneymanager.domain.Category;
 import fi.ahlgren.moneymanager.domain.CategoryRepository;
 
 @Service
+//ensure that the save methods are executed completely
 @Transactional
 public class CategoryService {
 
@@ -22,11 +23,11 @@ public class CategoryService {
     @Autowired
     private CategoryKeywords categoryKeywords;
 
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-        this.categoryKeywords = new CategoryKeywords();
-        saveCategories();
-    }
+    // public CategoryService(CategoryRepository categoryRepository) {
+    //     this.categoryRepository = categoryRepository;
+    //     this.categoryKeywords = new CategoryKeywords();
+    //     saveCategories();
+    // }
 
     // saves categories to categoryRepository
     public void saveCategories() {

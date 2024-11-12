@@ -21,13 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
@@ -104,7 +101,9 @@ public class CSVcontroller {
                 transactions.add(transaction);
             }
 
+            //saveAll checks if transaction already exists
             transactionService.saveAll(transactions);
+
             redirectAttributes.addFlashAttribute("message", "File data has been saved successfully!");
 
             // Spendings total by a category between minDate and maxDate

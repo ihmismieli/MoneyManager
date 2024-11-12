@@ -58,9 +58,9 @@ public class TransactionService {
         return transactionRepository.findAllByTransactionDateBetween(startDate, endDate);
     }
 
-    public boolean doesTransactionExists(LocalDate date) {
-        return transactionRepository.existsByTransactionDate(date);
-    }
+    // public boolean doesTransactionExists(LocalDate date) {
+    //     return transactionRepository.existsByTransactionDate(date);
+    // }
 
     // Calculates the total sums of all categories
     public Map<String, Double> calculateTotalByCategory(LocalDate startDate, LocalDate endDate) {
@@ -71,7 +71,8 @@ public class TransactionService {
             String categoryName = transaction.getCategory().getName();
             double amount = transaction.getAmount();
             // getOrDefault ensures that value is never null
-            totalByCategory.put(categoryName, totalByCategory.getOrDefault(categoryName, 0.0) + amount);
+            double currentTotal = totalByCategory.getOrDefault(categoryName, 0.0);
+            totalByCategory.put(categoryName, currentTotal + amount);
         }
 
         // Formats total sums
@@ -118,7 +119,7 @@ public class TransactionService {
         return totalIncome.doubleValue();
     }
 
-    // DATE range calculation
+    // DATE range calculation for Search spendings
     public Map<String, BigDecimal> calculateTotalByDate(List<Transaction> transactions) {
         Map<String, BigDecimal> spendingsByCategory = new HashMap<>();
 
@@ -135,22 +136,9 @@ public class TransactionService {
     }
 
     // Date range calculation for total income
-    // public BigDecimal calculateIncomeByDate (List<Transaction> transactions, LocalDate startDate, LocalDate endDate){
-    //     BigDecimal totalIncome = BigDecimal.ZERO;
+    
 
-    //     for(Transaction transaction : transactions){
-    //         if(!transaction.getPaymentDate().isBefore(startDate) && !transaction.getPaymentDate().isAfter(endDate)) {
-    //             if (transaction.getAmount() > 0 &&
-    //             transaction.getCategory().getName().equalsIgnoreCase("Income")){
-    //                 BigDecimal amount = BigDecimal.valueOf(transaction.getAmount());
-    //                 totalIncome = totalIncome.add(amount).setScale(2, RoundingMode.HALF_UP);
-    //             }
-    //         }
-    //     }
-    //     return totalIncome;
-    // }
-
-    // Returns timeline for the CSV and transactions by paymentdate
+    // Returns timeline for the CSV and transactions by paymentDate
     public String getTimelineforCSV(List<Transaction> transactions) {
         if (!transactions.isEmpty()) {
             List<LocalDate> paymentDates = transactions.stream()
