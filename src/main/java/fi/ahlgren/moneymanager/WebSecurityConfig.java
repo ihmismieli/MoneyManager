@@ -22,7 +22,7 @@ private UserDetailServiceImpl userDetailsService;
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/home", "/css/**").permitAll()
+                        .requestMatchers("/","/signup", "/home", "/css/**").permitAll()
                         .requestMatchers("/moneymanager").authenticated()
                         .anyRequest().authenticated())
                 .formLogin(formlogin -> formlogin
