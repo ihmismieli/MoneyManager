@@ -29,6 +29,7 @@ public class MoneymanagerApplication {
 
 			createUserIfNotFound(appUserRepository, "user", "$2a$10$ZgZhgrczZubse6IzjJe9vO3MayZtLeOaW5yjD15DSjTRsDh860y2G", "USER");
 
+			createUserIfNotFound(appUserRepository, "user1", "$2a$12$Ltq5yblasTW1H2OJsplBCeOCijK6on/wMcMhoRbfdRzd8TmN1RpC2", "USER");
 			createUserIfNotFound(appUserRepository, "admin", "$2a$10$ppC47QIlMYsg7LU8YdR2Wu3Xp8IA9x3pO.X4ePWW0TmVUU3XHza7.", "ADMIN");
 			
 			
