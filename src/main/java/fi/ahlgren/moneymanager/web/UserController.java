@@ -35,14 +35,14 @@ public class UserController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(value = "saveuser", method = RequestMethod.POST)
+    @RequestMapping(value = "saveuser", method = RequestMethod.GET)
     public String save(@Valid @ModelAttribute("signupform") SignupForm signupForm, BindingResult bindingResult) {
     	if (!bindingResult.hasErrors()) { // validation errors
     		if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { // check password match		
 	    		String pwd = signupForm.getPassword();
 		    	BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
 		    	String hashPwd = bc.encode(pwd);
-	
+                System.out.println("OLLAAN KONTROLLERIS");
 		    	AppUser newUser = new AppUser();
 		    	newUser.setPasswordHash(hashPwd);
 		    	newUser.setUsername(signupForm.getUsername());

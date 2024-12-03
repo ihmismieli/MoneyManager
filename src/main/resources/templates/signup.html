@@ -9,7 +9,7 @@
 <div class="container">
 	<h1>Sign-up</h1>
      <div class="col-md-4">
-		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
+		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="GET">
 			<div>
 				<label> Username :<input type="text" th:field="*{username}" class="form-control"/></label>
 				<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>	
