@@ -53,6 +53,27 @@ h1 {
     border: 1px solid rgb(253, 253, 253);
 }
 
+.sign-out-btn {
+    background-color: rosybrown;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 50%;
+    border-radius: 5px;
+
+}
+
+.sign-out-btn:hover {
+    background-color: #b7afaf; /* Hover-tilan taustaväri */
+    color: white; /* Hover-tilan tekstiväri */
+    text-decoration: none; /* Varmistaa, että alleviivaus ei näy hover-tilassa */
+   /* Lisää kehys hover-tilassa (valinnainen) */
+}
+
+
+
 .alert {
     text-align: center;
     margin: 0 auto; /*keskittää*/

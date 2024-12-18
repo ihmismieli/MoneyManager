@@ -99,3 +99,7 @@ h1 {
     text-decoration: none;
     border: none;
 }
+
+span {
+    font-weight: bold;
+}

@@ -14,56 +14,51 @@ import fi.ahlgren.moneymanager.domain.AppUserRepository;
 import fi.ahlgren.moneymanager.domain.SignupForm;
 import jakarta.validation.*;
 
-
-
 @Controller
 public class UserController {
 	@Autowired
-    private AppUserRepository repository; 
-	
-    @RequestMapping(value = "signup")
-    public String addStudent(Model model){
-    	model.addAttribute("signupform", new SignupForm());
-        return "signup";
-    }	
-    
-    /**
-     * Create new user
-     * Check if user already exists & form validation
-     * 
-     * @param signupForm
-     * @param bindingResult
-     * @return
-     */
-    @RequestMapping(value = "saveuser", method = RequestMethod.GET)
-    public String save(@Valid @ModelAttribute("signupform") SignupForm signupForm, BindingResult bindingResult) {
-    	if (!bindingResult.hasErrors()) { // validation errors
-    		if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { // check password match		
-	    		String pwd = signupForm.getPassword();
-		    	BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-		    	String hashPwd = bc.encode(pwd);
-                System.out.println("OLLAAN KONTROLLERIS");
-		    	AppUser newUser = new AppUser();
-		    	newUser.setPasswordHash(hashPwd);
-		    	newUser.setUsername(signupForm.getUsername());
-		    	newUser.setRole("USER");
-		    	if (repository.findByUsername(signupForm.getUsername()) == null) { // Check if user exists
-		    		repository.save(newUser);
-		    	}
-		    	else {
-	    			bindingResult.rejectValue("username", "err.username", "Username already exists");    	
-	    			return "signup";		    		
-		    	}
-    		}
-    		else {
-    			bindingResult.rejectValue("passwordCheck", "err.passCheck", "Passwords does not match");    	
-    			return "signup";
-    		}
-    	}
-    	else {
-    		return "signup";
-    	}
-    	return "redirect:/login";    	
-    }    
-    
+	private AppUserRepository repository;
+
+	@RequestMapping(value = "signup")
+	public String addStudent(Model model) {
+		model.addAttribute("signupform", new SignupForm());
+		return "signup";
+	}
+
+	/**
+	 * Create new user
+	 * Check if user already exists & form validation
+	 * 
+	 * @param signupForm
+	 * @param bindingResult
+	 * @return
+	 */
+	@RequestMapping(value = "saveuser", method = RequestMethod.GET)
+	public String save(@Valid @ModelAttribute("signupform") SignupForm signupForm, BindingResult bindingResult) {
+		if (!bindingResult.hasErrors()) { // validation errors
+			if (signupForm.getPassword().equals(signupForm.getPasswordCheck())) { // check password match
+				String pwd = signupForm.getPassword();
+				BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+				String hashPwd = bc.encode(pwd);
+				System.out.println("OLLAAN KONTROLLERIS");
+				AppUser newUser = new AppUser();
+				newUser.setPasswordHash(hashPwd);
+				newUser.setUsername(signupForm.getUsername());
+				newUser.setRole("USER");
+				if (repository.findByUsername(signupForm.getUsername()) == null) { // Check if user exists
+					repository.save(newUser);
+				} else {
+					bindingResult.rejectValue("username", "err.username", "Username already exists");
+					return "signup";
+				}
+			} else {
+				bindingResult.rejectValue("passwordCheck", "err.passCheck", "Passwords does not match");
+				return "signup";
+			}
+		} else {
+			return "signup";
+		}
+		return "redirect:/login";
+	}
+
 }

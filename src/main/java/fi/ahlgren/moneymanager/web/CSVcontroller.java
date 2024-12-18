@@ -23,9 +23,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 public class CSVcontroller {
@@ -36,6 +36,13 @@ public class CSVcontroller {
     private CategoryService categoryService;
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @GetMapping("/moneymanager")
+    public String helloString(Model model) {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", currentUsername);
+        return "moneymanager";
+    }
 
     // MultipartFile is Spring's class that is used to handle files
     @PostMapping("/moneymanager")
@@ -57,7 +64,7 @@ public class CSVcontroller {
             List<Transaction> transactions = new ArrayList<>();
             scanner.nextLine();
 
-            //date initialization
+            // date initialization
             LocalDate minDate = LocalDate.MAX;
             LocalDate maxDate = LocalDate.MIN;
 
@@ -65,6 +72,11 @@ public class CSVcontroller {
             // id to transaction
             String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
             AppUser currentUser = appUserRepository.findByUsername(currentUsername);
+
+            if (currentUser == null) {
+                redirectAttributes.addFlashAttribute("message", "User not found.");
+                return "redirect:/moneymanager";
+            }
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -101,22 +113,23 @@ public class CSVcontroller {
                 transactions.add(transaction);
             }
 
-            //saveAll checks if transaction already exists
+            // saveAll checks if transaction already exists
             transactionService.saveAll(transactions);
 
             redirectAttributes.addFlashAttribute("message", "File data has been saved successfully!");
 
             // Spendings total by a category between minDate and maxDate
-            Map<String, Double> totalByCategory = transactionService.calculateTotalByCategory(minDate, maxDate);
+            Map<String, Double> totalByCategory = transactionService.calculateTotalByCategory(currentUser, minDate,
+                    maxDate);
             redirectAttributes.addFlashAttribute("totals", totalByCategory);
 
             // Spendings total without income and personal transfer between minDate and
             // maxDate
-            double totalSpendings = transactionService.calculateTotalSpendings(minDate, maxDate);
+            double totalSpendings = transactionService.calculateTotalSpendings(currentUser, minDate, maxDate);
             redirectAttributes.addFlashAttribute("totalSpendings", totalSpendings);
 
             // Total income between minDate and maxDate
-            double totalIncome = transactionService.calculateTotalIncome(minDate, maxDate);
+            double totalIncome = transactionService.calculateTotalIncome(currentUser, minDate, maxDate);
             redirectAttributes.addFlashAttribute("totalIncome", totalIncome);
 
             // Date timeline for spendings
@@ -140,7 +153,5 @@ public class CSVcontroller {
                 .replace("Ö", "O")
                 .replace("å", "a")
                 .replace("Å", "A");
-
     }
-    
 }

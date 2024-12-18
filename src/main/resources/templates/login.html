@@ -27,7 +27,9 @@
         <div th:if="${param.logout}" class="alert alert-info">
             You have been logged out.
         </div>
-        <a th:href="@{/signup}">Sign-up</a>
+        <div>
+            <a th:href="@{/signup}" class="sign-out-btn">Sign-up</a>
+        </div>
     </div>
 </body>
 

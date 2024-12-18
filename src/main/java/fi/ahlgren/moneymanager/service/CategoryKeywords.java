@@ -62,7 +62,7 @@ public class CategoryKeywords {
         categoryMap.put("Beauty", Arrays.asList("beauty", "kauneus", "klinikka", "HejBuddy", "Hair", "Tmi Susanna Ma", "TMI SESILIA RA", "FLOW21", "LOOKGOOD", "koko", "orchidee", "Parturi"));
 
         // Health
-        categoryMap.put("Health", Arrays.asList("Oloni", "Hieronta", "Osteopaatti"));
+        categoryMap.put("Health", Arrays.asList("Oloni", "Hieronta", "Osteopaatti", "Terveystalo"));
 
         // Hobbies
         categoryMap.put("Hobbies", Arrays.asList("fitness", "Elixia", "Fressi", "Gym", "Fit", "sali", "Paybyway", "Talihalli", "POLYTEKNIKKOJEN ILMAILUKERHO R", "HELSINKI HACKLAB RY", "Juha Heikkinen kerhomaksu", "Keravan lennokkikerho", "SUOMEN ILMAILULIITTO R.Y.", "Zettle-*Nordic Padel O", "SuperPark", "Helsingin polkupyöräilijät", "Seikkailupuisto Zippy"));

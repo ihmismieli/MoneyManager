@@ -123,3 +123,7 @@ table {
     margin: auto;
     text-align: center;
 }
+
+.search-timeline-container {
+    margin-bottom: 20px;
+}

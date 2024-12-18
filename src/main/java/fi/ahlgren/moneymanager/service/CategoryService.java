@@ -23,12 +23,6 @@ public class CategoryService {
     @Autowired
     private CategoryKeywords categoryKeywords;
 
-    // public CategoryService(CategoryRepository categoryRepository) {
-    //     this.categoryRepository = categoryRepository;
-    //     this.categoryKeywords = new CategoryKeywords();
-    //     saveCategories();
-    // }
-
     // saves categories to categoryRepository
     public void saveCategories() {
         for (Map.Entry<String, List<String>> entry : categoryKeywords.getCategoryMap().entrySet()) {
